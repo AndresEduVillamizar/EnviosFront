@@ -1,24 +1,24 @@
 pipeline {
-//Donde se va a ejecutar el Pipeline
+  //Donde se va a ejecutar el Pipeline
   agent {
     label 'Slave_Induccion'
   }
 
-//Opciones específicas de Pipeline dentro del Pipeline
+  //Opciones específicas de Pipeline dentro del Pipeline
   options {
     buildDiscarder(logRotator(numToKeepStr: '3'))
     disableConcurrentBuilds()
   }
-//Una sección que define las herramientas “preinstaladas” en Jenkins
+  //Una sección que define las herramientas “preinstaladas” en Jenkins
   tools {
     jdk 'JDK8_Centos'
     gradle 'Gradle5.0_Centos'
   }
-//Aquí comienzan los “items” del Pipeline
-  stages{
+  //Aquí comienzan los “items” del Pipeline
+  stages {
       stage('Checkout') {
-      steps{
-        echo "------------>Checkout<------------"
+      steps {
+        echo '------------>Checkout<------------'
         checkout([
             $class: 'GitSCM',
             branches: [[name: '*/master']],
@@ -27,12 +27,12 @@ pipeline {
             gitTool: 'Default',
             submoduleCfg: [],
             userRemoteConfigs: [[
-            credentialsId: 'GitHub_AndresEduVillamizar', 
+            credentialsId: 'GitHub_AndresEduVillamizar',
             url:'https://github.com/AndresEduVillamizar/EnviosFront'
             ]]
         ])
       }
-    }
+      }
     stage('NPM Install') {
       steps {
         withEnv(['NPM_CONFIG_LOGLEVEL=warn']) {
@@ -42,20 +42,20 @@ pipeline {
     }
 
     stage('Test') {
-      steps{
-        echo "------------>Test<------------"
+      steps {
+        echo '------------>Test<------------'
         sh 'npm run test -- --watch=false --browsers ChromeHeadless'
       }
     }
     stage('Test end-to-end') {
-      steps{
-        echo "------------>Testing Protractor<------------"
+      steps {
+        echo '------------>Testing Protractor<------------'
         sh 'npm run e2e'
       }
+    }
 
-
-     stage('Static Code Analysis') {
-      steps{
+    stage('Static Code Analysis') {
+      steps {
           echo '------------>Análisis de código estático<------------'
           withSonarQubeEnv('Sonar') {
             sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
@@ -65,11 +65,10 @@ pipeline {
 
     stage('Build') {
       steps {
-        echo "------------>Build<------------"
+        echo '------------>Build<------------'
         sh 'npm run build'
       }
     }
-
   }
 
   post {
