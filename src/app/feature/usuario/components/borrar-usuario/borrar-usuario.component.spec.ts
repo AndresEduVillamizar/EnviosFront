@@ -52,8 +52,20 @@ describe('BorrarUsuarioComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Deberia eliminar un usuario',() =>{    
+  it('Deberia fallar al eliminar un usuario',() =>{    
     component.eliminarUsuario(1);
     expect(component.alertaEliminacion).toBeFalse();
   })
+
+  it('Deberia eliminar un usuario',() =>{    
+    const spy = spyOn(service, 'eliminar').and.returnValue(
+      of(true)
+    );
+    component.eliminarUsuario(1);
+    expect(spy).toHaveBeenCalled();
+    expect(component.alertaEliminacion).toBeTrue();
+
+  })
+
+
 });

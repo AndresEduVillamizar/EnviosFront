@@ -23,7 +23,7 @@ export class BorrarUsuarioComponent implements OnInit {
 
   constructor(
     protected enviosService: EnviosService,
-    private configAlerta:NgbAlertConfig
+    protected configAlerta:NgbAlertConfig
     ) {
       this.configAlerta.dismissible=false;
       this.configAlerta.type="warning";
