@@ -1,0 +1,13 @@
+.table {
+    margin: 0% auto;
+    background: #F0F0F0;
+    width: 50%;
+}
+
+td,
+th {
+    text-align: center;
+    margin: auto;
+    align-content: center;
+    vertical-align: middle;
+}

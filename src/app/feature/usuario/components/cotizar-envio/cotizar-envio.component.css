@@ -1,0 +1,19 @@
+.table {
+    margin: 0% auto;
+    background: #F0F0F0;
+    width: 50%;
+}
+
+td,
+th {
+    text-align: center;
+    margin: auto;
+    align-content: center;
+    vertical-align: middle;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

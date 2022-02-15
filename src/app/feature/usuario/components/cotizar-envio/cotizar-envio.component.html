@@ -1,0 +1,48 @@
+<div class="container mt-3" id="usuarios">
+    <div class="table-responsive-sm">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Categoria de cuenta</th>
+                    <th scope="col">Cotizar envio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of listaUsuarios | async | paginate: { itemsPerPage: 5, currentPage: page }">
+                    <th scope="row">{{item.id}}</th>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.premium == true ? 'Es cuenta premium' : 'NO es cuenta premium'}}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" (click)="triggerModal(modalData)">Cotizar</button>
+                        <ng-template #modalData let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modal-basic-title">Cotizacion del trayecto que desea:</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">x</span>
+                                </button>
+                            </div>
+                            <form [formGroup]="cotizacionForm">
+                                <div class="modal-body">
+                                    <label for="nombreUsuario">Ingrese la distancia del recorrido para el envio.</label>
+                                    <input type="number" class="form-control shadow-sm" id="idDistanciaRecorrido" formControlName="distanciaRecorrido" placeholder="Ingrese un numero." autocomplete="off">
+                                    <div class="card mt-1" *ngIf="transaccionCotizacion">
+                                        <div class="card-body">
+                                            El valor de su cotizacion es: ${{valorCotizacion}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm" (click)="cotizar(item.id)" [disabled]="cotizacionForm.invalid">Cotizar</button>
+                                    <button type="button" class="btn btn-danger btn-sm" (click)="modal.close()">Cancelar</button>
+                                </div>
+                            </form>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container mt-3">
+    <div class="card shadow-sm">
+        <div class="card-body centrarTitulo">
+            Registrar Usuario
+        </div>
+    </div>
+    <ngb-alert *ngIf="alertaCreacion" [type]="alertaTipo">
+        {{alertaMensaje}}
+    </ngb-alert>
+    <form [formGroup]="usuarioForm" (ngSubmit)="crear()">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-6 col-sm-4 text-center centrarForm">
+                    <label for="nombreUsuario">Nombre del usuario *</label>
+                    <input type="text" class="form-control shadow-sm" id="nombre" formControlName="nombre" placeholder="Ingrese un nombre de usuario.">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-6 col-sm-4 text-center centrarForm">
+                    <label for="contrasena">Contraseña *</label>
+                    <input type="password" class="form-control shadow-sm" id="clave" formControlName="clave" placeholder="Contraseña">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-check form-switch">
+                    <div class="col-xs-6 col-sm-4 checkPremium">
+                        <input class="form-check-input" type="checkbox" id="esPremium" formControlName="premium">
+                        <label class="form-check-label" for="premiumCheck">Es cuenta Premium</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 text-center mt-3 centrarForm">
+                <button [disabled]="usuarioForm.invalid" type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,20 @@
+.centrarTitulo {
+    margin: 0 auto;
+}
+
+.centrarForm {
+    margin: 0 auto;
+    margin-top: 1%;
+}
+
+.checkPremium {
+    margin-top: 1%;
+    margin-left: 38%;
+    float: left;
+}
+
+.centrarCheck {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
