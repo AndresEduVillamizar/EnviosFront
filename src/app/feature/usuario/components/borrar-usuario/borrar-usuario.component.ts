@@ -5,8 +5,8 @@ import { EnviosService } from '@usuario/shared/service/producto.service';
 import { Usuario } from '@usuario/shared/model/usuario';
 import { NgbAlertConfig } from '@ng-bootstrap/ng-bootstrap';
 
-const ELIMINACION_CORRECTA = "Se ha eliminado exitosamente";
-const ELIMINACION_INCORRECTA = "No se ha logrado eliminar exitosamente "
+const ELIMINACION_CORRECTA = 'Se ha eliminado exitosamente';
+const ELIMINACION_INCORRECTA = 'No se ha logrado eliminar exitosamente '
 
 @Component({
   selector: 'app-borrar-producto',
@@ -19,14 +19,14 @@ export class BorrarUsuarioComponent implements OnInit {
   public page: number;
   public listaUsuarios: Observable<Usuario[]>;
   public alertaEliminacion: boolean;
-  public alertaMensaje: String;
+  public alertaMensaje: string;
 
   constructor(
     protected enviosService: EnviosService,
     protected configAlerta:NgbAlertConfig
     ) {
       this.configAlerta.dismissible=false;
-      this.configAlerta.type="warning";
+      this.configAlerta.type='warning';
      }
 
   ngOnInit() {
@@ -44,11 +44,11 @@ export class BorrarUsuarioComponent implements OnInit {
         this.alertaMensaje = ELIMINACION_CORRECTA;
         this.listaUsuarios = this.enviosService.consultar();
         this.alertaEliminacion = true;
-        this.configAlerta.type= "success";
+        this.configAlerta.type= 'success';
       }, error => {
         let errorRespuesta = JSON.parse(JSON.stringify(error));
         this.alertaMensaje = ELIMINACION_INCORRECTA + errorRespuesta.error.mensaje;
-        this.configAlerta.type= "warning";
+        this.configAlerta.type= 'warning';
       }
       );
   }

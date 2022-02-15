@@ -46,7 +46,7 @@ export class CotizarEnvioComponent implements OnInit {
         Validators.min(DISTANCIA_MINIMA),
         Validators.max(DISTANCIA_MAXIMA)
       ])
-    })
+    });
   }
 
   cotizar(idUsuario: number) {
@@ -79,7 +79,7 @@ export class CotizarEnvioComponent implements OnInit {
     });
   }
 
-  getDismissReason(reason: any): string {
+  getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

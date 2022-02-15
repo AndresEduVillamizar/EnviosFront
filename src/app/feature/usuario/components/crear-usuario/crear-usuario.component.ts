@@ -19,8 +19,8 @@ export class CrearUsuarioComponent implements OnInit {
   usuario: Usuario;
   alertaFormulario: boolean;
   alertaCreacion: boolean;
-  alertaMensaje: String;
-  alertaTipo: String;
+  alertaMensaje: string;
+  alertaTipo: string;
 
 
   constructor(protected enviosServices: EnviosService) { }
