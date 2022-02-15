@@ -24,7 +24,7 @@ export class CotizarEnvioComponent implements OnInit {
   cotizacion: Cotizacion;
   transaccionCotizacion: boolean;
   valorCotizacion: number;
-  mensajeError: String;
+  mensajeError: string;
 
   constructor(protected enviosServices: EnviosService,
     private modalService: NgbModal) { }

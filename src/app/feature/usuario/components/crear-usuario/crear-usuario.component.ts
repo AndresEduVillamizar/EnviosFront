@@ -5,8 +5,8 @@ import { Usuario } from '@usuario/shared/model/usuario';
 
 const LONGITUD_MINIMA_PERMITIDA_TEXTO = 3;
 const LONGITUD_MAXIMA_PERMITIDA_TEXTO = 20;
-const CREACION_EXITOSA = "success";
-const CREACION_FALLIDA = "danger";
+const CREACION_EXITOSA = 'success';
+const CREACION_FALLIDA = 'danger';
 
 @Component({
   selector: 'app-crear-usuario',
