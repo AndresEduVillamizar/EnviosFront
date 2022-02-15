@@ -1,9 +1,9 @@
 //import { browser, logging } from 'protractor';
 import { NavbarPage } from '../page/navbar/navbar.po';
 import { AppPage } from '../app.po';
-import { UsuarioPage } from '../page/usuario/usuario-crear.po';
+import { UsuarioPage } from '../page/usuario/usuario.po';
 
-describe('workspace-project Producto', () => {
+describe('workspace-project Usuario', () => {
     let page: AppPage;
     let navBar: NavbarPage;
     let usuario: UsuarioPage;
@@ -31,9 +31,25 @@ describe('workspace-project Producto', () => {
         // Adicionamos las validaciones despues de la creación
         // expect(<>).toEqual(<>);
     });
+
+    it('Deberia listar usuarios en pagina de borrar usuarios', async () => {
+        page.navigateTo();
+        navBar.clickBotonUsuarios();
+        usuario.clickBotonBorrarUsuarios();
+
+        expect(5).toBe(usuario.contarUsuariosBorrar());
+    });
+
+    it('Deberia listar usuarios en pagina de cotizar usuarios', async () => {
+        page.navigateTo();
+        navBar.clickBotonUsuarios();
+        usuario.clickBotonCotizarEnvios();
+
+        expect(5).toBe(usuario.contarUsuariosCotizar());
+    });
 /*
     it('Deberia listar productos', () => {
-        page.navigateTo();
+        page.navigateTo(); 
         navBar.clickBotonProductos();
         producto.clickBotonListarProductos();
 
