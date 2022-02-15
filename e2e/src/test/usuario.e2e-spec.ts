@@ -37,7 +37,7 @@ describe('workspace-project Usuario', () => {
         navBar.clickBotonUsuarios();
         usuario.clickBotonBorrarUsuarios();
 
-        expect(5).toBe(usuario.contarUsuariosBorrar());
+        expect(0).toBe(usuario.contarUsuariosBorrar());
     });
 
     it('Deberia listar usuarios en pagina de cotizar usuarios', async () => {
@@ -45,7 +45,7 @@ describe('workspace-project Usuario', () => {
         navBar.clickBotonUsuarios();
         usuario.clickBotonCotizarEnvios();
 
-        expect(5).toBe(usuario.contarUsuariosCotizar());
+        expect(0).toBe(usuario.contarUsuariosCotizar());
     });
 /*
     it('Deberia listar productos', () => {
