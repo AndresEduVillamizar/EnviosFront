@@ -24,6 +24,7 @@ export class CotizarEnvioComponent implements OnInit {
   cotizacion: Cotizacion;
   transaccionCotizacion: boolean;
   valorCotizacion: number;
+  mensajeError: String;
 
   constructor(protected enviosServices: EnviosService,
     private modalService: NgbModal) { }
@@ -48,17 +49,12 @@ export class CotizarEnvioComponent implements OnInit {
     })
   }
 
-
-
   cotizar(idUsuario: number) {
     if (this.cotizacionForm.valid) {
       this.cotizacion = new Cotizacion(idUsuario,
-        this.cotizacionForm.get('distanciaRecorrido').value)
+        this.cotizacionForm.get('distanciaRecorrido').value);
       this.consumoCotizarSolicitud();
-    } else {
-      console.log("ENTRANDO")
     }
-
   }
 
   consumoCotizarSolicitud() {
@@ -69,7 +65,7 @@ export class CotizarEnvioComponent implements OnInit {
         this.cotizacionForm.reset();
       },
         error => {
-          console.log(JSON.parse(JSON.stringify(error.error.mensaje)));
+          this.mensajeError = JSON.parse(JSON.stringify(error.error.mensaje));
         }
       );
   }

@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { CrearUsuarioComponent } from './crear-usuario.component';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EnviosService } from '../../shared/service/producto.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+
+const CREACION_EXITOSA = "success";
+const CREACION_FALLIDA = "danger";
 
 describe('CrearProductoComponent', () => {
   let component: CrearUsuarioComponent;
@@ -33,9 +37,6 @@ describe('CrearProductoComponent', () => {
     fixture = TestBed.createComponent(CrearUsuarioComponent);
     component = fixture.componentInstance;
     enviosService = TestBed.inject(EnviosService);
-    spyOn(enviosService, 'crear').and.returnValue(
-      of(true)
-    );
     fixture.detectChanges();
   });
 
@@ -95,10 +96,32 @@ describe('CrearProductoComponent', () => {
     component.usuarioForm.controls.premium.setValue(false);
     expect(component.usuarioForm.valid).toBeTruthy();
 
-    component.consumoCrearUsuario();
+    const spy = spyOn(enviosService, 'crear').and.returnValue(
+      of(true)
+    );
 
-    expect(component.alertaTipo).toEqual("success");
+    component.crear();
+    expect(spy).toHaveBeenCalled();
 
+    expect(component.alertaTipo).toEqual(CREACION_EXITOSA);
+
+  });
+
+  it('Deberia fallar al crear usuario', () => {
+    expect(component.usuarioForm.valid).toBeFalsy();
+    component.usuarioForm.controls.nombre.setValue('Prueba');
+    component.usuarioForm.controls.clave.setValue('PASSWORD');
+    component.usuarioForm.controls.premium.setValue(false);
+    expect(component.usuarioForm.valid).toBeTruthy();
+
+    const spy = spyOn(enviosService, 'crear').and.returnValue(
+      throwError({error:{mensaje:''}}),
+    );
+
+    component.crear();
+    expect(spy).toHaveBeenCalled();
+
+    expect(component.alertaTipo).toEqual(CREACION_FALLIDA);
   })
 
 

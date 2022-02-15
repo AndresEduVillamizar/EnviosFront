@@ -5,6 +5,8 @@ import { Usuario } from '@usuario/shared/model/usuario';
 
 const LONGITUD_MINIMA_PERMITIDA_TEXTO = 3;
 const LONGITUD_MAXIMA_PERMITIDA_TEXTO = 20;
+const CREACION_EXITOSA = "success";
+const CREACION_FALLIDA = "danger";
 
 @Component({
   selector: 'app-crear-usuario',
@@ -25,6 +27,7 @@ export class CrearUsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.construirFormularioUsuario();
+    this.inicializarVariables();
   }
 
   inicializarVariables() {
@@ -59,14 +62,14 @@ export class CrearUsuarioComponent implements OnInit {
   consumoCrearUsuario() {
     this.enviosServices.crear(this.usuario)
       .subscribe(success => {
-        this.alertaTipo = "success";
+        this.alertaTipo = CREACION_EXITOSA;
         let respuestaSuccess = JSON.parse(JSON.stringify(success));
         this.alertaMensaje = respuestaSuccess.valor;
         this.usuarioForm.reset();
         this.alertaCreacion = true;
       },
         error => {
-          this.alertaTipo = "danger";
+          this.alertaTipo = CREACION_FALLIDA;
           let respuestaError = JSON.parse(JSON.stringify(error));
           this.alertaMensaje = respuestaError.error.mensaje;
           this.alertaCreacion = true;

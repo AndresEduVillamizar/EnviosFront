@@ -12,7 +12,7 @@ import { of } from 'rxjs';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 
-describe('BorrarProductoComponent', () => {
+describe('BorrarUsuarioComponent', () => {
   let component: BorrarUsuarioComponent;
   let fixture: ComponentFixture<BorrarUsuarioComponent>;
   let service: EnviosService;

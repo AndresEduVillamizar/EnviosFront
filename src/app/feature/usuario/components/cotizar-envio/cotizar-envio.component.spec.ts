@@ -11,11 +11,16 @@ import { HttpService } from 'src/app/core/services/http.service';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 
-describe('ListarProductoComponent', () => {
+const DISTANCIA_MINIMA = 5;
+const DISTANCIA_MAXIMA = 40;
+const DISTANCIA_INFERIOR_MINIMA = 4;
+const DISTANCIA_SUPERIOR_MAXIMA = 41;
+
+describe('CotizarEnvioComponent', () => {
   let component: CotizarEnvioComponent;
   let fixture: ComponentFixture<CotizarEnvioComponent>;
   let enviosService: EnviosService;
-  const listaProductos: Usuario[] = [new Usuario('1', 'Producto 1',true), new Usuario('2', 'Producto 2',false)];
+  const listaUsuario: Usuario[] = [new Usuario('1', 'Producto 1', true), new Usuario('2', 'Producto 2', false)];
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -37,7 +42,7 @@ describe('ListarProductoComponent', () => {
     component = fixture.componentInstance;
     enviosService = TestBed.inject(EnviosService);
     spyOn(enviosService, 'consultar').and.returnValue(
-      of(listaProductos)
+      of(listaUsuario)
     );
     fixture.detectChanges();
   });
@@ -46,7 +51,48 @@ describe('ListarProductoComponent', () => {
     expect(component).toBeTruthy();
     component.listaUsuarios.subscribe(resultado => {
       expect(2).toBe(resultado.length);
+    });
   });
-});
+
+  it('formulario es invalido cuando esta vacio', () => {
+    expect(component.cotizacionForm.valid).toBeFalsy();
+  });
+
+  it('formulario es invalido por longitud minima', () => {
+    expect(component.cotizacionForm.valid).toBeFalsy();
+    component.cotizacionForm.controls.distanciaRecorrido.setValue(DISTANCIA_INFERIOR_MINIMA);
+    expect(component.cotizacionForm.valid).toBeFalsy();
+  });
+
+  it('formulario es invalido por longitud maxima', () => {
+    expect(component.cotizacionForm.valid).toBeFalsy();
+    component.cotizacionForm.controls.distanciaRecorrido.setValue(DISTANCIA_SUPERIOR_MAXIMA);
+    expect(component.cotizacionForm.valid).toBeFalsy();
+  });
+
+  it('formulario es valido por longitud minima', () => {
+    expect(component.cotizacionForm.valid).toBeFalsy();
+    component.cotizacionForm.controls.distanciaRecorrido.setValue(DISTANCIA_MINIMA);
+    expect(component.cotizacionForm.valid).toBeTrue();
+  });
+
+  it('formulario es valido por longitud maxima', () => {
+    expect(component.cotizacionForm.valid).toBeFalsy();
+    component.cotizacionForm.controls.distanciaRecorrido.setValue(DISTANCIA_MAXIMA);
+    expect(component.cotizacionForm.valid).toBeTrue();
+  });
+
+  it('Genera una cotizacion', () => {
+    expect(component.cotizacionForm.valid).toBeFalsy();
+    component.cotizacionForm.controls.distanciaRecorrido.setValue(DISTANCIA_MAXIMA);
+    expect(component.cotizacionForm.valid).toBeTrue();
+
+    const spy = spyOn(enviosService, 'generarCotizacion').and.returnValue(
+      of(true)
+    );
+    component.cotizar(1);
+    expect(spy).toHaveBeenCalled();
+    
+  });
 
 });
