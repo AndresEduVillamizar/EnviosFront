@@ -8,13 +8,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EnviosService } from '../../shared/service/producto.service';
 import { Usuario } from '../../shared/model/usuario';
 import { HttpService } from 'src/app/core/services/http.service';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 const DISTANCIA_MINIMA = 5;
 const DISTANCIA_MAXIMA = 40;
 const DISTANCIA_INFERIOR_MINIMA = 4;
 const DISTANCIA_SUPERIOR_MAXIMA = 41;
+const GET_DISMISS = 'TEST'
 
 describe('CotizarEnvioComponent', () => {
   let component: CotizarEnvioComponent;
@@ -93,6 +94,26 @@ describe('CotizarEnvioComponent', () => {
     component.cotizar(1);
     expect(spy).toHaveBeenCalled();
     
+  });
+
+  it('Generar modal', () => {
+    component.triggerModal('prueba');
+    expect(component.transaccionCotizacion).toBeFalse();
+  });
+
+  it('funcionamiento getDismissReason ESC', () => {
+    let respuesta = component.getDismissReason(ModalDismissReasons.ESC);
+    expect(respuesta).toEqual('by pressing ESC');
+  });
+
+  it('funcionamiento getDismissReason BACKDROP_CLICK', () => {
+    let respuesta = component.getDismissReason(ModalDismissReasons.BACKDROP_CLICK);
+    expect(respuesta).toEqual('by clicking on a backdrop');
+  });
+
+  it('funcionamiento getDismissReason else', () => {
+    let respuesta = component.getDismissReason(GET_DISMISS);
+    expect(respuesta).toEqual('with: ' + GET_DISMISS);
   });
 
 });
