@@ -8,7 +8,7 @@ import { HttpClientModule, HttpHandler } from '@angular/common/http';
 import { EnviosService } from '@usuario/shared/service/producto.service';
 import { HttpService } from '@core/services/http.service';
 import { Usuario } from '@usuario/shared/model/usuario';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -53,9 +53,14 @@ describe('BorrarUsuarioComponent', () => {
   });
 
   it('Deberia fallar al eliminar un usuario',() =>{    
+    const spy = spyOn(service, 'eliminar').and.returnValue(
+      throwError({error:{mensaje:''}}),
+    );
     component.eliminarUsuario(1);
+    expect(spy).toHaveBeenCalled();
     expect(component.alertaEliminacion).toBeFalse();
-  })
+    expect(component.configAlerta.type).toEqual('warning');
+  });
 
   it('Deberia eliminar un usuario',() =>{    
     const spy = spyOn(service, 'eliminar').and.returnValue(
@@ -64,8 +69,9 @@ describe('BorrarUsuarioComponent', () => {
     component.eliminarUsuario(1);
     expect(spy).toHaveBeenCalled();
     expect(component.alertaEliminacion).toBeTrue();
+    expect(component.configAlerta.type).toEqual('success');
 
-  })
+  });
 
 
 });

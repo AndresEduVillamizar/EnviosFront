@@ -23,7 +23,7 @@ export class BorrarUsuarioComponent implements OnInit {
 
   constructor(
     protected enviosService: EnviosService,
-    protected configAlerta:NgbAlertConfig
+    public configAlerta:NgbAlertConfig
     ) {
       this.configAlerta.dismissible=false;
       this.configAlerta.type='warning';
@@ -46,9 +46,9 @@ export class BorrarUsuarioComponent implements OnInit {
         this.alertaEliminacion = true;
         this.configAlerta.type= 'success';
       }, error => {
+        this.configAlerta.type= 'warning';
         let errorRespuesta = JSON.parse(JSON.stringify(error));
         this.alertaMensaje = ELIMINACION_INCORRECTA + errorRespuesta.error.mensaje;
-        this.configAlerta.type= 'warning';
       }
       );
   }
