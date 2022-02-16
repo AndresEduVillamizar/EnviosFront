@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { ProductoRoutingModule } from './producto-routing.module';
+import { ProductoRoutingModule } from './usuario-routing.module';
 import { BorrarUsuarioComponent } from './components/borrar-usuario/borrar-usuario.component';
 import { CotizarEnvioComponent } from './components/cotizar-envio/cotizar-envio.component';
 import { ProductoComponent } from './components/producto/producto.component';
