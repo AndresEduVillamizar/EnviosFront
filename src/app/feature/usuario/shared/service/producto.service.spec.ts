@@ -6,11 +6,13 @@ import { environment } from 'src/environments/environment';
 import { HttpService } from 'src/app/core/services/http.service';
 import { Usuario } from '../model/usuario';
 import { HttpResponse } from '@angular/common/http';
+import { Cotizacion } from '../model/cotizacion';
 
 describe('EnviosService', () => {
   let httpMock: HttpTestingController;
   let service: EnviosService;
   const apiEndpointUsuariosConsulta = `${environment.endpoint}`;
+  const apiEndpointGeneracionCotizacion = `${environment.endpoint}`;
   const apiEndpointUsuarios = `${environment.endpoint}/registro`;
   const apiEndpointUsuariosEliminacion = `${environment.endpoint}?id=`;
 
@@ -28,7 +30,7 @@ describe('EnviosService', () => {
     expect(productService).toBeTruthy();
   });
 
-  it('deberia listar productos', () => {
+  it('deberia listar usuarios', () => {
     const dummyUsuarios = [
       new Usuario('1', 'NombreUsuario 1',true), new Usuario('2', 'NombreUsuario 2',false)
     ];
@@ -51,13 +53,23 @@ describe('EnviosService', () => {
     req.event(new HttpResponse<boolean>({body: true}));
   });
 
-  it('deberia eliminar un producto', () => {
+  it('deberia eliminar un usuario', () => {
     const dummyUsuario = 1;
     service.eliminar(dummyUsuario).subscribe((respuesta) => {
       expect(respuesta).toEqual(true);
     });
     const req = httpMock.expectOne(`${apiEndpointUsuariosEliminacion}1`);
     expect(req.request.method).toBe('DELETE');
+    req.event(new HttpResponse<boolean>({body: true}));
+  });
+
+  it('deberia generar una cotizacion', () => {
+    const dummyCotizacion = new Cotizacion(1,20);
+    service.generarCotizacion(dummyCotizacion).subscribe((respuesta) => {
+      expect(respuesta).toEqual(true);
+    });
+    const req = httpMock.expectOne(apiEndpointGeneracionCotizacion);
+    expect(req.request.method).toBe('POST');
     req.event(new HttpResponse<boolean>({body: true}));
   });
 });
